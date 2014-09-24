@@ -1,0 +1,1 @@
+/home/nicolas/baseobs/poste/htdocs/config.php
