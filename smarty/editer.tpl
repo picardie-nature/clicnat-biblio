@@ -14,6 +14,7 @@
 	</div>
 	<div class="col-xs-6" style="height:100%; overflow:scroll; background-color:rgb(200,210,200);">
 		<button id="btn_envoi" class="btn btn-primary pull-right">Envoyer <span class="glyphicon glyphicon-ok"></span></button>
+		<a href="?t=citations_article&id_biblio_article={$article->id_biblio_article}" target="_blank">Citations</a>
 		<div id="envoi_log"></div>
 		<fieldset><legend>Espèce</legend>
 			Recherche : <input type="text" id="espece_recherche">

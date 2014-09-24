@@ -16,6 +16,8 @@ require_once(OBS_DIR.'element.php');
 require_once(OBS_DIR.'espece.php');
 require_once(OBS_DIR.'smarty.php');
 require_once(OBS_DIR.'liste_espace.php');
+require_once(OBS_DIR.'extractions.php');
+require_once(OBS_DIR.'extractions-conditions.php');
 
 class biblio_article {
 	public function __construct($id_biblio_article) {
@@ -49,6 +51,14 @@ class biblio_article {
 
 		$txt .= " ; {$this->document_annee_publi} ; {$this->titre} ; In: {$this->document_titre} (ou nom du classeur)";
 		return $txt;
+	}
+
+	public function citations($db) {
+		$tag_archive_article = bobs_tags::by_ref($db, 'ARCA');
+		$extraction = new bobs_extractions($db);
+		$extraction->ajouter_condition(new bobs_ext_c_tag($tag_archive_article->id_tag, $this->id_biblio_article));
+
+		return $extraction->get_citations();
 	}
 }
 
@@ -140,6 +150,13 @@ class Biblio extends clicnat_smarty {
 		}
 	}
 	
+	public function before_citations_article() {
+		$article = new biblio_article($this->db, $_GET['id_biblio_article']);
+		$citations = $article->citations($this->db);
+		$this->assign_by_ref('article', $article);
+		$this->assign_by_ref('citations', $citations);
+	}
+
 	public function before_json() {
 		$this->header_json();
 		try {
