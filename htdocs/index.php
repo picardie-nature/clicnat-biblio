@@ -8,6 +8,8 @@ else
 	require_once('/etc/baseobs/config.php');
 
 define('LOCALE', 'fr_FR.UTF-8');
+if (!defined('SBIBLIO_MONGODB'))
+	define('SBIBLIO_MONGODB', 'mongodb://localhost:27017');
 
 require_once(SMARTY_DIR.'Smarty.class.php');
 require_once(OBS_DIR.'element.php');
@@ -56,7 +58,7 @@ class Biblio extends clicnat_smarty {
 	private static function mongodb() {
 		static $mdb;
 		if (!isset($mdb)) {
-			$mc = new MongoClient("mongodb://localhost:27017");
+			$mc = new MongoClient(SBIBLIO_MONGODB);
 			$mdb = $mc->clicnat_saisie_biblio;
 		}
 		return $mdb;
