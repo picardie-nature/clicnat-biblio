@@ -56,7 +56,7 @@ class biblio_article {
 	public function citations($db) {
 		$tag_archive_article = bobs_tags::by_ref($db, 'ARCA');
 		$extraction = new bobs_extractions($db);
-		$extraction->ajouter_condition(new bobs_ext_c_tag($tag_archive_article->id_tag, $this->id_biblio_article));
+		$extraction->ajouter_condition(new bobs_ext_c_tag_int($tag_archive_article->id_tag, $this->id_biblio_article));
 
 		return $extraction->get_citations();
 	}
