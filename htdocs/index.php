@@ -151,7 +151,7 @@ class Biblio extends clicnat_smarty {
 	}
 	
 	public function before_citations_article() {
-		$article = new biblio_article($this->db, $_GET['id_biblio_article']);
+		$article = new biblio_article($_GET['id_biblio_article']);
 		$citations = $article->citations($this->db);
 		$this->assign_by_ref('article', $article);
 		$this->assign_by_ref('citations', $citations);
