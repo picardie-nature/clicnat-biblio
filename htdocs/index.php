@@ -179,8 +179,8 @@ class Biblio extends clicnat_smarty {
 					break;
 				case 'enregistre_citation':
 					$data_observation = array(
-						'datedeb' => $_POST['date_deb'],
-						'datefin' => $_POST['date_fin'],
+						'datedeb' => bobs_element::date_fr2sql($_POST['date_deb']),
+						'datefin' => bobs_element::date_fr2sql($_POST['date_fin']),
 						'id_espace' => $_POST['id_espace'],
 						'table_espace' => $_POST['table_espace'],
 						'id_utilisateur' => $_POST['id_utilisateur']
