@@ -168,7 +168,7 @@ function Editeur() {
 	});
 
 	$('#espece_recherche').autocomplete({
-		source: '?t=autocomplete_espece',
+		source: '?t=autocomplete_espece&affiche_expert=1',
 		select: function (event,ui) {
 			$('#espece').html(ui.item.label);
 			this.ed.citation.id_espece = ui.item.value;
