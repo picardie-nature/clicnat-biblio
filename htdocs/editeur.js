@@ -69,7 +69,7 @@ function Citation() {
 		return false;
 	}
 }
-
+var m = false;
 function Editeur() {
 	var elesrc = $('#article');
 	this.id_biblio_article = elesrc.attr('id_biblio_article');
@@ -102,6 +102,55 @@ function Editeur() {
 		data['id_utilisateur'] = article.attr('id_utilisateur');
 		return data;
 	}
+
+	$('#btn_adresse').click(function () {
+		$.ajax({
+			url: '?'+$.param({
+				t: 'json',
+				a: 'geocode',
+				adresse: $('#txt_adresse').val()
+			}),
+			success: function (data,txt,xhr) {
+				console.log(data);
+				if (!m) 
+					m = new Carto('carte1');
+				var pt = new OpenLayers.LonLat(data[0], data[1]);
+				var porg = new OpenLayers.Projection("EPSG:4326");
+				var pdest = new OpenLayers.Projection("EPSG:900913");
+				pt.transform(porg,pdest);
+				m.map.updateSize();
+				var popup = new OpenLayers.Popup.FramedCloud(
+					"adresse",
+					pt,
+					new OpenLayers.Size(200,40),
+					$('#txt_adresse').val(),
+					null,
+					true
+				);
+				$('#pt_adresse').attr({lon: data[0], lat: data[1]});
+				m.map.addPopup(popup);
+			}
+		});
+	});
+
+	$('#pt_adresse').click(function () {
+		$.ajax({
+			url:'?'+$.param({
+				t: 'json',
+				a: 'nouveau_point',
+				lat: $(this).attr('lat'),
+				lon: $(this).attr('lon'),
+				nom: $('#txt_adresse').val()
+			}),
+			success: function (data,txt,xhr) {
+				var ed = document.getElementById('page').ed;
+				ed.citation.table_espace = 'espace_point';
+				ed.citation.id_espace = data['id_espace'];
+				var info = $('#localisation_info');
+				info.html('Adresse enregistrée : espace_point.'+data['id_espace']);
+			}
+		});
+	});
 
 	$('.o_loc').hide();
 	$('.loc').click(function () {
@@ -143,7 +192,7 @@ function Editeur() {
 		});
 	});
 
-	// evant après chargement d'une image
+	// event après chargement d'une image
 	$(this.img).load(function () {
 		var canv = $('#canvas');
 		var ratio = canv.width()/this.width;

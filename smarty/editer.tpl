@@ -73,6 +73,7 @@
 		<a href="#" class="loc" did="d_lespace">Liste d'espace</a>
 		<a href="#" class="loc" did="d_commune">Commune</a>
 		<a href="#" class="loc" did="d_departement">Département</a>
+		<a href="#" class="loc" did="d_adresse">Adresse</a>
 		<div id="localisation_info"></div>
 		<div id="d_lespace" class="o_loc">
 			<ul>
@@ -88,8 +89,13 @@
 		<div id="d_departement" class="o_loc">
 			Nom du département : <input type="text" id="departement_recherche"/>
 		</div>
-		<!-- <div id="map" style="width:100%; height: 300px;">
-		</div> -->
+		<div id="d_adresse" class="o_loc">
+			Texte adresse <input type="text" id="txt_adresse" style="width:100%;"><button id="btn_adresse" class="btn btn-primary btn-xs">Chercher</button>
+			<button id="pt_adresse" lat="" long"">Enregistrer</button>
+			<div id="carte1" style="width:100%; height:400px;">
+			</div>
+			
+		</div>
 		</fieldset>
 		<fieldset><legend>Commentaire</legend>
 			<textarea id="commentaire" style="width:100%; height: 200px;"></textarea>

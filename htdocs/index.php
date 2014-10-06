@@ -162,6 +162,20 @@ class Biblio extends clicnat_smarty {
 		try {
 			$data = array();
 			switch ($_GET['a']) {
+				case 'geocode':
+					require_once(OBS_DIR.'geocode.php');
+					$data = clicnat_geocode_google::adresse($_GET['adresse']);
+					break;
+				case 'nouveau_point':
+					$id = bobs_espace_point::insert($this->db, array(
+						"id_utilisateur" => $_SESSION['id_utilisateur'],
+						"reference" => $_GET['nom'],
+						"nom" => $_GET['nom'],
+						"x" => $_GET['lon'],
+						"y" => $_GET['lat']
+					));
+					$data['id_espace'] = $id;
+					break;
 				case 'espaces_liste_espaces':
 					$liste = new clicnat_listes_espaces($this->db, (int)$_GET['id_liste_espace']);
 					$data = array(
