@@ -4,6 +4,7 @@
 <span class="label label-primary">{$citations->count()} citations</span>
 <table style="background-color:white;" width="100%">
 	<tr>
+		<th>Page</th>
 		<th>Espèce</th>
 		<th>Effectif</th>
 		<th>Observateur</th>
@@ -13,6 +14,13 @@
 {foreach from=$citations item=citation}
 	{assign var=observation value=$citation->get_observation()}
 	<tr>
+		<td style="text-align:center;">
+			{foreach from=$citation->get_tags() item=tag}
+				{if  $tag.ref eq 'ARCP'}
+					{$tag.v_int}
+				{/if}
+			{/foreach}
+		</td>
 		<td>{$citation->get_espece()}</td>
 		<td>
 			{$citation->nb}
